@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blossom.cc</title>
+  <meta name="description" content="Blossom.cc — premium Rivals client." />
+  <meta property="og:title" content="Blossom.cc" />
+  <meta property="og:description" content="Premium Rivals enhancement." />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #040405;
+      --elevated: #0b0a0d;
+      --elevated2: #121015;
+      --line: rgba(255,255,255,0.06);
+      --line-pink: rgba(255,145,180,0.25);
+      --pink: #ff91b4;
+      --pink2: #ffb0c8;
+      --text: #f6f3f5;
+      --muted: #8b848a;
+      --dim: #5a5459;
+      --discord: #5865F2;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    .bg {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 45% at 50% -15%, rgba(255,145,180,0.14), transparent 55%),
+        radial-gradient(ellipse 40% 30% at 100% 40%, rgba(88,101,242,0.06), transparent 50%);
+    }
+    .shell {
+      position: relative; z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* NAV */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+    }
+    .brand img {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+    .brand .dot { color: var(--pink); }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav a.link {
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav a.link:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.12s, background 0.15s, box-shadow 0.15s, border-color 0.15s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-pink {
+      background: var(--pink);
+      color: #1a0a10;
+      box-shadow: 0 4px 24px rgba(255,145,180,0.3);
+    }
+    .btn-pink:hover { background: var(--pink2); }
+    .btn-discord {
+      background: var(--discord);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(88,101,242,0.3);
+    }
+    .btn-discord:hover { filter: brightness(1.08); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* HERO */
+    .hero {
+      margin: 28px 0 88px;
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 40px;
+      align-items: center;
+      background: linear-gradient(160deg, #0e0c10, #08070a);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -8%; top: -25%;
+      width: 55%; height: 150%;
+      background: radial-gradient(ellipse at center, rgba(255,90,130,0.16), transparent 65%);
+      pointer-events: none;
+    }
+    .hero-copy { position: relative; z-index: 2; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 14px;
+    }
+    .tag::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--pink);
+      box-shadow: 0 0 8px var(--pink);
+    }
+    .hero-copy h1 {
+      font-size: clamp(2.3rem, 4.2vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.08;
+      margin-bottom: 14px;
+    }
+    .hero-copy p {
+      color: var(--muted);
+      font-size: 1.02rem;
+      max-width: 380px;
+      margin-bottom: 26px;
+      line-height: 1.65;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .hero-art {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      perspective: 1000px;
+    }
+    .ui-shot {
+      width: 100%;
+      max-width: 440px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line-pink);
+      background: #0a0a0c;
+      box-shadow: 0 28px 60px rgba(0,0,0,0.55), 0 0 40px rgba(255,107,157,0.12);
+      transform: rotateY(-5deg) rotateX(2deg);
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s;
+      will-change: transform;
+    }
+    .ui-shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* SECTIONS */
+    section { margin-bottom: 88px; }
+    .label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 8px;
+    }
+    .title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+      max-width: 460px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .card {
+      background: var(--elevated);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .card:hover {
+      border-color: var(--line-pink);
+      background: var(--elevated2);
+    }
+    .card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .card p {
+      color: var(--muted);
+      font-size: 0.875rem;
+      line-height: 1.55;
+    }
+
+    /* PRICING */
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .plan {
+      background: var(--elevated);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 26px 20px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .plan:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.12);
+    }
+    .plan.hot {
+      border-color: var(--line-pink);
+      background: linear-gradient(180deg, rgba(255,145,180,0.07), var(--elevated) 55%);
+    }
+    .plan .name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .plan .price {
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .plan .price small {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .plan .desc {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 22px;
+      flex: 1;
+      line-height: 1.5;
+    }
+    .plan .btn { width: 100%; height: 40px; }
+    .plan.hot .btn-ghost {
+      background: var(--pink);
+      color: #1a0a10;
+      border-color: transparent;
+    }
+    .plan.hot .btn-ghost:hover { background: var(--pink2); }
+    .note {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.82rem;
+    }
+    .note strong { color: var(--muted); font-weight: 600; }
+
+    /* CTA STRIP */
+    .cta {
+      background: var(--elevated);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .cta h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .cta p { color: var(--muted); font-size: 0.9rem; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 36px 0 48px;
+    }
+    .foot-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .foot-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .foot-brand img { height: 28px; width: auto; }
+    .foot-brand .dot { color: var(--pink); }
+    .foot-links {
+      display: flex;
+      gap: 20px;
+    }
+    .foot-links a {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .foot-links a:hover { color: var(--text); }
+    .copy {
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 32px 24px; }
+      .ui-shot { transform: none; max-width: 380px; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .plans { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .nav a.link { display: none; }
+      .grid, .plans { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="shell">
+
+    <header>
+      <a class="brand" href="#">
+        <img src="assets/logo.png" alt="Blossom.cc" />
+      </a>
+      <nav class="nav">
+        <a class="link" href="#features">Features</a>
+        <a class="link" href="#pricing">Pricing</a>
+        <a class="link" href="https://discord.gg/AJVdZ2bGP" target="_blank" rel="noopener">Discord</a>
+        <a class="btn btn-discord" href="https://discord.gg/AJVdZ2bGP" target="_blank" rel="noopener">Join Discord</a>
+      </nav>
+    </header>
+
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="tag">Rivals</div>
+        <h1>Discover Rivals</h1>
+        <p>
+          Premium client with ragebot, silent aim, ESP, and a clean pink UI.
+          Keys and support live on Discord.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-discord" href="https://discord.gg/AJVdZ2bGP" target="_blank" rel="noopener">Get access</a>
+          <a class="btn btn-ghost" href="#pricing">View pricing</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="ui-shot" id="tilt">
+          <img src="assets/menu.png" alt="Blossom.cc interface" width="960" height="720" />
+        </div>
+      </div>
+    </div>
+
+    <section id="features">
+      <div class="label">Features</div>
+      <h2 class="title">Built for Rivals</h2>
+      <p class="sub">Combat and visuals in one menu. Nothing extra.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Silent aim &amp; aimbot</h3>
+          <p>Closest part, FOV, smoothing, and sticky lock for stable tracking.</p>
+        </div>
+        <div class="card">
+          <h3>Ragebot</h3>
+          <p>Void spam, attack windows, weapon priority, multi-attempt shots.</p>
+        </div>
+        <div class="card">
+          <h3>Weapons</h3>
+          <p>No spread, full auto, backstab helpers, firerate, grenade options.</p>
+        </div>
+        <div class="card">
+          <h3>ESP &amp; visuals</h3>
+          <p>Boxes, names, health bars, and clear overlays in fight.</p>
+        </div>
+        <div class="card">
+          <h3>Character</h3>
+          <p>Anti-aim, desync, and movement tools for harder peeks.</p>
+        </div>
+        <div class="card">
+          <h3>Key system</h3>
+          <p>HWID-bound one-time keys. Redeem in the small gate UI on load.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="label">Pricing</div>
+      <h2 class="title">Simple plans</h2>
+      <p class="sub">First 24 hours free. Then pick a plan on Discord.</p>
+      <div class="plans">
+        <div class="plan">
+          <div class="name">Trial</div>
+          <div class="price">Free</div>
+          <p class="desc">Full access for 24 hours. Start in Discord.</p>
+          <a class="btn btn-ghost" href="https://discord.gg/AJVdZ2bGP" target="_blank" rel="noopener">Get trial</a>
+        </div>
+        <div class="plan">
+          <div class="name">Day</div>
+          <div class="price">$0.99 <small>/ day</small></div>
+          <p class="desc">Twenty-four hours after the trial.</p>
+          <a class="btn btn-ghost" href="https://discord.gg/AJVdZ2bGP" target="_blank" rel="noopener">Buy on Discord</a>
+        </div>
+        <div class="plan hot">
+          <div class="name">Week</div>
+          <div class="price">$1.99 <small>/ week</small></div>
+          <p class="desc">Seven days. Best for regular play.</p>
+          <a class="btn btn-ghost" href="https://discord.gg/AJVdZ2bGP" target="_blank" rel="noopener">Buy on Discord</a>
+        </div>
+        <div class="plan">
+          <div class="name">Lifetime</div>
+          <div class="price">$6.99</div>
+          <p class="desc">One payment. Lifetime updates.</p>
+          <a class="btn btn-ghost" href="https://discord.gg/AJVdZ2bGP" target="_blank" rel="noopener">Buy on Discord</a>
+        </div>
+      </div>
+      <p class="note"><strong>All purchases and keys are handled on Discord.</strong> No payment forms on this site.</p>
+    </section>
+
+    <section>
+      <div class="cta">
+        <div>
+          <h2>Ready when you are</h2>
+          <p>Join the server for keys, updates, and support.</p>
+        </div>
+        <a class="btn btn-discord" href="https://discord.gg/AJVdZ2bGP" target="_blank" rel="noopener">discord.gg/AJVdZ2bGP</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="foot-row">
+        <div class="foot-brand">
+          <img src="assets/logo.png" alt="" />
+          <span>blossom<span class="dot">.cc</span></span>
+        </div>
+        <div class="foot-links">
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+          <a href="https://discord.gg/AJVdZ2bGP" target="_blank" rel="noopener">Discord</a>
+        </div>
+      </div>
+      <div class="copy">
+        Copyright &copy; <span id="y"></span> Blossom.cc. All rights reserved.<br />
+        Not affiliated with Roblox Corporation or the developers of Rivals.
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+    const frame = document.getElementById("tilt");
+    if (frame && matchMedia("(pointer:fine)").matches) {
+      const host = frame.parentElement;
+      host.addEventListener("mousemove", (e) => {
+        const r = host.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        frame.style.transform =
+          `rotateY(${-5 + x * 12}deg) rotateX(${2 - y * 8}deg) translateY(${y * -6}px) scale(1.02)`;
+      });
+      host.addEventListener("mouseleave", () => {
+        frame.style.transform = "rotateY(-5deg) rotateX(2deg)";
+      });
+    }
+  </script>
+</body>
+</html>
